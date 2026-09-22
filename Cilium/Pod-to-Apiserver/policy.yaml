@@ -1,12 +1,25 @@
+cat <<EOF | kubectl apply -f -
 apiVersion: "cilium.io/v2"
 kind: CiliumNetworkPolicy
 metadata:
   name: "only-kube-apiserver"
 spec:
-  description: "این پاد فقط اجازهٔ صحبت با kube-apiserver را دارد، نه اینترنت و نه پادهای دیگر"
+  description: "این پاد فقط اجازهٔ DNS و صحبت با kube-apiserver را دارد"
   endpointSelector:
     matchLabels:
       run: entity-test
   egress:
+  - toEndpoints:
+    - matchLabels:
+        "k8s:io.kubernetes.pod.namespace": kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: ANY
+      rules:
+        dns:
+        - matchPattern: "*"
   - toEntities:
     - kube-apiserver
+EOF
