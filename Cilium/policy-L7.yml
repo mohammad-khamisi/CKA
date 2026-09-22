@@ -18,3 +18,7 @@ spec:
         http:
         - method: "GET"
           path: "^/$"
+#root@master:~# kubectl exec client-allowed -- curl -s --max-time 5 -o /dev/null -w "HTTP:%{http_code}\n" nginx.default.svc.cluster.local/
+#HTTP:200
+#root@master:~# kubectl exec client-allowed -- curl -s --max-time 5 -o /dev/null -w "HTTP:%{http_code}\n" nginx.default.svc.cluster.local/admin.html
+#HTTP:403
