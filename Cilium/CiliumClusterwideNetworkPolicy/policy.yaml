@@ -1,0 +1,17 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: "admin-only-to-nginx"
+spec:
+  description: "فقط role=admin (در هر namespace) به app=nginx (در هر namespace) وصل شود"
+  endpointSelector:
+    matchLabels:
+      app: nginx
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        role: admin
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
