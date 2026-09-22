@@ -1,0 +1,20 @@
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-dev-only
+spec:
+  description: "role=dev فقط به مسیر / دسترسی دارد، نه /admin.html"
+  endpointSelector:
+    matchLabels:
+      app: nginx
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        role: dev
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+      rules:
+        http:
+        - method: "GET"
+          path: "^/$"
