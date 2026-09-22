@@ -1,0 +1,12 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "only-kube-apiserver"
+spec:
+  description: "این پاد فقط اجازهٔ صحبت با kube-apiserver را دارد، نه اینترنت و نه پادهای دیگر"
+  endpointSelector:
+    matchLabels:
+      run: entity-test
+  egress:
+  - toEntities:
+    - kube-apiserver
