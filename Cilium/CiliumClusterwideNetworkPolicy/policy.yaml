@@ -15,3 +15,11 @@ spec:
     - ports:
       - port: "80"
         protocol: TCP
+
+#kubectl exec -n admin-ns admin-client -- curl -s --max-time 5 -o /dev/null -w "admin->nginx-a: %{http_code}\n" nginx-a.ns-a.svc.cluster.local
+#admin->nginx-a: 200
+#kubectl exec -n admin-ns admin-client -- curl -s --max-time 5 -o /dev/null -w "admin->nginx-b: %{http_code}\n" nginx-b.ns-b.svc.cluster.local
+#admin->nginx-b: 200
+#kubectl exec -n ns-a random-client -- curl -s --max-time 5 -o /dev/null -w "random->nginx-a: %{http_code}\n" nginx-a.ns-a.svc.cluster.local
+#random->nginx-a: 000
+#command terminated with exit code 28
