@@ -27,3 +27,9 @@ spec:
         protocol: TCP
       - port: "80"
         protocol: TCP
+        
+#root@master:~# kubectl exec fqdn-test -- curl -s --max-time 5 -o /dev/null -w "example.com -> HTTP:%{http_code}\n" https://example.com
+#example.com -> HTTP:200
+#root@master:~# kubectl exec fqdn-test -- curl -s --max-time 5 -o /dev/null -w "github.com  -> HTTP:%{http_code}\n" https://github.com
+#github.com  -> HTTP:000
+#command terminated with exit code 28
