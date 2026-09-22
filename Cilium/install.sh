@@ -10,5 +10,6 @@ cilium install \
   --set ipam.operator.clusterPoolIPv4PodCIDRList="{192.168.0.0/16}" \
   --set kubeProxyReplacement=false
 
+# enable UI
 cilium hubble ui
 cilium hubble enable --ui
