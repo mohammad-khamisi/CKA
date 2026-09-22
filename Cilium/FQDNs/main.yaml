@@ -1,0 +1,3 @@
+kubectl run fqdn-test --image=curlimages/curl --command -- sleep 3600
+kubectl get pod fqdn-test
+
