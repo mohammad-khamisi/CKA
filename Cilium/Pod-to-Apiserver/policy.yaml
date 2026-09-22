@@ -1,4 +1,3 @@
-cat <<EOF | kubectl apply -f -
 apiVersion: "cilium.io/v2"
 kind: CiliumNetworkPolicy
 metadata:
@@ -22,4 +21,9 @@ spec:
         - matchPattern: "*"
   - toEntities:
     - kube-apiserver
-EOF
+
+#kubectl exec entity-test -- curl -sk --max-time 5 -o /dev/null -w "kube-apiserver -> HTTP:%{http_code}\n" https://kubernetes.default.svc
+#kube-apiserver -> HTTP:403 # (همچنان وصل می‌شود)
+#kubectl exec entity-test -- curl -s --max-time 5 -o /dev/null -w "example.com    -> HTTP:%{http_code}\n" https://example.com
+#example.com    -> HTTP:000
+#command terminated with exit code 28
