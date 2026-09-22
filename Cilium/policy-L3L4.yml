@@ -15,3 +15,9 @@ spec:
     - ports:
       - port: "80"
         protocol: TCP
+
+#root@master:~# kubectl exec client-allowed -- curl -s --max-time 5 -o /dev/null -w "HTTP:%{http_code}\n" nginx.default.svc.cluster.local
+#HTTP:200
+#root@master:~# kubectl exec client-blocked -- curl -s --max-time 5 -o /dev/null -w "HTTP:%{http_code}\n" nginx.default.svc.cluster.local
+#HTTP:000
+#command terminated with exit code 28
