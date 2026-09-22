@@ -1,0 +1,17 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-dev-only
+spec:
+  description: "فقط پادهای role=dev به nginx وصل شوند"
+  endpointSelector:
+    matchLabels:
+      app: nginx
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        role: dev
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
