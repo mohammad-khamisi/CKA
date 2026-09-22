@@ -1,3 +1,7 @@
 kubectl run fqdn-test --image=curlimages/curl --command -- sleep 3600
 kubectl get pod fqdn-test
 
+kubectl exec fqdn-test -- curl -s -o /dev/null -w "example.com -> HTTP:%{http_code}\n" https://example.com
+example.com -> HTTP:200
+kubectl exec fqdn-test -- curl -s -o /dev/null -w "github.com  -> HTTP:%{http_code}\n" https://github.com
+github.com  -> HTTP:200
