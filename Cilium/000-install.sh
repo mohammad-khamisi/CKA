@@ -13,3 +13,6 @@ cilium install \
 # enable UI
 cilium hubble ui
 cilium hubble enable --ui
+
+# enable wireguard
+cilium upgrade --set encryption.type=wireguard --set encryption.nodeEncryption=true
