@@ -20,5 +20,11 @@ helm install longhorn longhorn/longhorn \
 
 kubectl get pods -n longhorn-system -w
 
-kubectl get nodes.longhorn.io -n longhorn-system
-kubectl get storageclass
+root@master:~# kubectl get nodes.longhorn.io -n longhorn-system
+NAME     READY   ALLOWSCHEDULING   SCHEDULABLE   AGE
+master   True    true              True          5m8s
+worker   True    true              True          5m5s
+root@master:~# kubectl get storageclass
+NAME                 PROVISIONER          RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
+longhorn (default)   driver.longhorn.io   Delete          Immediate           true                   5m43s
+longhorn-static      driver.longhorn.io   Delete          Immediate           true                   5m40s
