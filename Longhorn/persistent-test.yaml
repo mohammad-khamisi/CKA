@@ -1,0 +1,62 @@
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: longhorn-test-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: longhorn-test-pod
+spec:
+  containers:
+  - name: writer
+    image: busybox
+    command: ["sh", "-c", "while true; do date >> /data/log.txt; sleep 5; done"]
+    volumeMounts:
+    - name: data
+      mountPath: /data
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: longhorn-test-pvc
+EOF
+
+# صبر کنید Running شود، بعد چند ثانیه صبر کنید تا چند خط نوشته شود
+kubectl get pod longhorn-test-pod -w
+
+# محتوای فایل را ببینید
+kubectl exec longhorn-test-pod -- cat /data/log.txt
+
+# حالا پاد را کامل پاک کنید (نه PVC را)
+kubectl delete pod longhorn-test-pod
+--------------------------------------------------------------------------------------
+# همان پاد را دوباره با همان YAML بسازید (بدون بخش PVC چون از قبل هست)
+kubectl apply -f - <<'EOF'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: longhorn-test-pod
+spec:
+  containers:
+  - name: writer
+    image: busybox
+    command: ["sh", "-c", "while true; do date >> /data/log.txt; sleep 5; done"]
+    volumeMounts:
+    - name: data
+      mountPath: /data
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: longhorn-test-pvc
+EOF
+
+# دوباره فایل را چک کنید
+kubectl exec longhorn-test-pod -- cat /data/log.txt
