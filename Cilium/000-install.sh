@@ -13,6 +13,8 @@ cilium install \
 # enable UI
 cilium hubble ui
 cilium hubble enable --ui
+ssh -i my-key-univ.pem -L 8081:localhost:8081 ubuntu@172.28.100.203 \
+  "sudo kubectl -n kube-system port-forward svc/hubble-ui 8081:80 --address localhost"
 
 # enable wireguard
 cilium upgrade --set encryption.type=wireguard --set encryption.nodeEncryption=true
