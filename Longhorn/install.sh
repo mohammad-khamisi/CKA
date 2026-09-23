@@ -28,3 +28,7 @@ root@master:~# kubectl get storageclass
 NAME                 PROVISIONER          RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
 longhorn (default)   driver.longhorn.io   Delete          Immediate           true                   5m43s
 longhorn-static      driver.longhorn.io   Delete          Immediate           true                   5m40s
+
+# ui access
+ssh -i my-key-univ.pem -L 8080:localhost:8080 ubuntu@172.28.100.203 \
+  "sudo kubectl -n longhorn-system port-forward svc/longhorn-frontend 8080:80 --address localhost"
