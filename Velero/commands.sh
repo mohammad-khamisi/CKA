@@ -32,7 +32,11 @@ velero backup create app-only-backup \
   --selector app=nginx \
   --ttl 72h0m0s
 
-
+# یک Schedule هر ۱۰ دقیقه برای تست سریع
+velero schedule create every-10-min-test \
+  --schedule="*/10 * * * *" \
+  --include-namespaces default \
+  --ttl 2h0m0s
 
 
 
