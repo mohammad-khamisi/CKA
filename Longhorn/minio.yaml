@@ -43,7 +43,7 @@ spec:
     spec:
       containers:
       - name: minio
-        image: minio/minio:latest
+        image: tobi312/minio:latest
         args: ["server", "/data", "--console-address", ":9001"]
         envFrom:
         - secretRef:
