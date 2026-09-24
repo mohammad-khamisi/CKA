@@ -26,7 +26,7 @@ helm install rancher rancher-latest/rancher \
 
 kubectl get pods -n cattle-system -w
 
-
+ssh -i my-key-univ.pem -L 9443:localhost:9443 ubuntu@172.28.100.203 "sudo kubectl -n cattle-system port-forward svc/rancher 9443:443 --address localhost"
 
 
 
