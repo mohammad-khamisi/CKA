@@ -13,3 +13,12 @@ cat <<EOF > credentials-velero
 aws_access_key_id=admin
 aws_secret_access_key=ChangeMe123!
 EOF
+
+velero install \
+  --provider aws \
+  --plugins velero/velero-plugin-for-aws:v1.11.0 \
+  --bucket velero-backup \
+  --secret-file ./credentials-velero \
+  --backup-location-config region=minio,s3ForcePathStyle="true",s3Url=http://minio.minio.svc.cluster.local:9000 \
+  --use-node-agent \
+  --features=EnableCSI
