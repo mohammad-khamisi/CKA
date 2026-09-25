@@ -10,3 +10,19 @@ systemctl status rke2-server.service
 export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
 export PATH=$PATH:/var/lib/rancher/rke2/bin
 kubectl get nodes
+
+
+┌─────────────────────────────────┐
+│   Management Cluster (RKE2)     │
+│   ┌───────────────────────┐     │
+│   │   Rancher (running)   │     │
+│   └───────────────────────┘     │
+└──────────────┬──────────────────┘
+               │  (فقط ارتباط API / Agent)
+     ┌─────────┼─────────┬──────────────┐
+     │         │         │              │
+┌────▼───┐ ┌───▼────┐ ┌──▼─────┐  ┌─────▼─────┐
+│cluster-1│ │cluster-2││cluster-3││cluster-4  │
+│ (K3s)   │ │ (RKE2)  ││ (EKS)   ││ (on-prem) │
+│ مستقل   │ │ مستقل   │ │ مستقل   │  │ مستقل     │
+└────────┘ └────────┘ └────────┘  └───────────┘
