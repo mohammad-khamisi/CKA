@@ -10,12 +10,12 @@ AWX:
     postgres_selector: |
       kubernetes.io/hostname: worker
 
-    postgres_storage_class: longhorn
+    postgres_storage_class: local-path
     postgres_storage_requirements:
       requests:
         storage: 8Gi
     projects_persistence: true
-    projects_storage_class: longhorn
+    projects_storage_class: local-path
     projects_storage_size: 2Gi
     projects_storage_access_mode: ReadWriteOnce
 
