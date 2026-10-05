@@ -4,5 +4,9 @@ metadata:
   name: cluster-example
 spec:
   instances: 3
+  affinity:
+    enablePodAntiAffinity: true
+    podAntiAffinityType: required              # default: preferred
+    topologyKey: topology.kubernetes.io/zone   # default: kubernetes.io/hostname
   storage:
     size: 1Gi
