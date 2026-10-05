@@ -8,3 +8,8 @@ helm install awx-operator awx-operator/awx-operator \
   -f awx-values.yaml
 
 kubectl -n awx get pods -w
+
+kubectl -n awx get secret awx-demo-admin-password -o jsonpath='{.data.password}' | base64 -d; echo
+
+ssh -i my-key-univ.pem -L 8080:localhost:8080 ubuntu@172.28.100.203 "sudo kubectl port-forward -n awx svc/awx-demo-service 8080:80 --address localhost"
+
