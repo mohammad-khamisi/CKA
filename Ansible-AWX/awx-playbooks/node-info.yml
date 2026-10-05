@@ -1,0 +1,7 @@
+---
+- name: Show node info
+  hosts: all
+  tasks:
+    - name: Print free memory
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }} free memory MB: {{ ansible_memory_mb.nocache.free }}"
