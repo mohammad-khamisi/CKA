@@ -21,7 +21,7 @@ AWX:
 
     web_resource_requirements:
       requests: { cpu: 100m, memory: 256Mi }
-      limits: { memory: 1Gi }
+      limits: { memory: 2Gi }
     task_resource_requirements:
       requests: { cpu: 100m, memory: 256Mi }
       limits: { memory: 1536Mi }
