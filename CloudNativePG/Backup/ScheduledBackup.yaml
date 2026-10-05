@@ -1,0 +1,12 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: nightly
+spec:
+  schedule: "0 0 2 * * *"      # sec min hour day month weekday
+  backupOwnerReference: self
+  method: plugin
+  cluster:
+    name: cluster-example
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
