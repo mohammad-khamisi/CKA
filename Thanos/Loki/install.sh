@@ -10,3 +10,6 @@ helm install alloy grafana/alloy --version 1.13.0 \
 
 kubectl -n monitoring get pods
 kubectl -n monitoring logs deploy/alloy --tail=20
+
+helm upgrade kps prometheus-community/kube-prometheus-stack \
+  -n monitoring -f values-kps.yaml -f values-kps-loki.yaml
