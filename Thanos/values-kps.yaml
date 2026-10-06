@@ -1,0 +1,93 @@
+fullnameOverride: kps
+
+defaultRules:
+  create: false
+
+alertmanager:
+  enabled: false
+kubeStateMetrics:
+  enabled: false
+kubeApiServer:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeProxy:
+  enabled: false
+coreDns:
+  enabled: false
+
+nodeExporter:
+  enabled: true
+prometheus-node-exporter:
+  nodeSelector:
+    kubernetes.io/hostname: master
+  resources:
+    requests: {cpu: 10m, memory: 20Mi}
+    limits: {memory: 50Mi}
+
+prometheusOperator:
+  admissionWebhooks:
+    enabled: false
+    patch:
+      enabled: false
+  tls:
+    enabled: false
+  nodeSelector:
+    kubernetes.io/hostname: master
+  resources:
+    requests: {cpu: 20m, memory: 50Mi}
+    limits: {memory: 150Mi}
+
+prometheus:
+  thanosService:
+    enabled: true
+  prometheusSpec:
+    replicas: 1
+    retention: 12h
+    retentionSize: 2GB
+    scrapeInterval: 60s
+    evaluationInterval: 60s
+    disableCompaction: true
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    nodeSelector:
+      kubernetes.io/hostname: master
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: local-path
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi
+    resources:
+      requests: {cpu: 200m, memory: 350Mi}
+      limits: {memory: 800Mi}
+    thanos:
+      objectStorageConfig:
+        existingSecret:
+          name: thanos-objstore
+          key: objstore.yml
+      resources:
+        requests: {cpu: 20m, memory: 30Mi}
+        limits: {memory: 100Mi}
+
+grafana:
+  enabled: true
+  adminPassword: ChangeMe123
+  defaultDashboardsEnabled: false
+  nodeSelector:
+    kubernetes.io/hostname: master
+  resources:
+    requests: {cpu: 50m, memory: 100Mi}
+    limits: {memory: 250Mi}
+  additionalDataSources:
+    - name: Thanos
+      type: prometheus
+      access: proxy
+      url: http://thanos-query.monitoring.svc.cluster.local:10902
+      isDefault: false
