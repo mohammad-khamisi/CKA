@@ -1,0 +1,41 @@
+objstoreConfig:
+  create: false
+  name: thanos-objstore
+  key: objstore.yml
+
+additionalEndpoints:
+  - dnssrv+_grpc._tcp.kps-thanos-discovery.monitoring.svc.cluster.local
+
+additionalReplicaLabels:
+  - prometheus_replica
+
+query:
+  enabled: true
+  replicas: 1
+  nodeSelector:
+    kubernetes.io/hostname: master
+  resources:
+    requests: {cpu: 50m, memory: 80Mi}
+    limits: {memory: 250Mi}
+
+storeGateway:
+  enabled: true
+  replicas: 1
+  nodeSelector:
+    kubernetes.io/hostname: master
+  extraArgs:
+    - --index-cache-size=100MB
+    - --chunk-pool-size=200MB
+  resources:
+    requests: {cpu: 50m, memory: 100Mi}
+    limits: {memory: 300Mi}
+  persistence:
+    enabled: false
+
+compact:
+  enabled: false
+  nodeSelector:
+    kubernetes.io/hostname: master
+  resources:
+    requests: {cpu: 50m, memory: 100Mi}
+    limits: {memory: 300Mi}
