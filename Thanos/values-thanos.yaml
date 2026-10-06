@@ -24,7 +24,7 @@ storeGateway:
   nodeSelector:
     kubernetes.io/hostname: master
   extraArgs:
-    - --index-cache-size=100MB
+    - '--index-cache.config={"type":"IN-MEMORY","config":{"max_size":"100MB","max_item_size":"10MB"}}'
     - --chunk-pool-size=200MB
   resources:
     requests: {cpu: 50m, memory: 100Mi}
