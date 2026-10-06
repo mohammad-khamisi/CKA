@@ -34,3 +34,10 @@ helm install thanos stevehipwell/thanos --version 1.24.1 \
 
 kubectl -n monitoring get pods
 kubectl -n monitoring get svc | grep thanos
+#--------------------------------------------------------------------------------
+ssh -t -i my-key-univ.pem \
+  -L 3000:localhost:3000 \
+  -L 10902:localhost:10902 \
+  -L 9090:localhost:9090 \
+  ubuntu@172.28.100.203 \
+  "sudo kubectl port-forward -n monitoring svc/kps-grafana 3000:80 --address localhost & sudo kubectl port-forward -n monitoring svc/thanos-query 10902:10902 --address localhost & sudo kubectl port-forward -n monitoring svc/kps-prometheus 9090:9090 --address localhost & wait"
