@@ -15,3 +15,12 @@ kubectl -n monitoring create secret generic thanos-objstore \
 
 # فایل کلید را از دیسک پاک کنید
 rm -f objstore.yml
+
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+
+helm install kps prometheus-community/kube-prometheus-stack \
+  -n monitoring -f values-kps.yaml
+
+kubectl -n monitoring get pods -w
